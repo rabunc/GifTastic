@@ -8,9 +8,18 @@
         button,
         div,
         form,
-        input {
+        input,
+        {
             margin: 10px;
         }
+
+        .gif-result {
+            margin: 20px;
+            float: left;
+            width: 180px;
+            padding: 10px;
+        }
+
     </style>
 </head>
 
@@ -47,15 +56,35 @@
                     for (i = 0; i < response.data.length; i++) {
                         console.log(response)
                         var gifResultDiv = $("<div>");
+                        $(gifResultDiv).addClass("gif-result")
                         var ratingDiv = $("<div>");
                         var rating = response.data[i].rating;
-                        console.log(rating);
                         $(ratingDiv).html("Rating: " + rating);
                         $(gifResultDiv).append(ratingDiv);
-                        $("#results-view").append(gifResultDiv);
+                        var gifImageDiv = $("<img width=200px>");
+                        $(gifImageDiv).addClass("gif-image")
+                        var gifImage = response.data[i].images.fixed_height_still.url
+                        var gifImagePlay = response.data[i].images.fixed_height.url
+                        $(gifImageDiv).attr("play-src", gifImagePlay)
+                        $(gifImageDiv).attr("still-src", gifImage)
+                        $(gifImageDiv).attr("src", gifImage)
+                        $(gifResultDiv).append(gifImageDiv);
+                        $("#results-view").prepend(gifResultDiv);
                     }
                 })
             })
+
+            $(document).on("click", ".gif-image", function (event) {
+                clickedGif = event.target
+                var playingGifUrl = $(clickedGif).attr("play-src");
+                var stillGifUrl = $(clickedGif).attr("still-src");
+                if ($(clickedGif).attr("src") === $(clickedGif).attr("still-src")){ 
+                    $(clickedGif).attr("src", playingGifUrl)
+                } else {
+                    $(clickedGif).attr("src", stillGifUrl)
+                }
+
+            });
         </script>
 
     </div>
