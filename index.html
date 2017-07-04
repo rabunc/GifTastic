@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>GifTastic</title>
+    <style type="text/css">
+        button,
+        div,
+        form,
+        input {
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="buttons-view"></div>
+        <div id="results-view"></div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <script type="text/javascript">
+            var topics = ["4th of July", "Christmas", "Mardi Gras", "New Years Eve"]
+
+            function renderButtons() {
+                for (i = 0; i < topics.length; i++) {
+                    var button = $("<button>");
+                    $(button).text(topics[i]);
+                    $(button).attr("data-name", topics[i]);
+                    $(button).addClass("topic-button");
+                    $("#buttons-view").append(button);
+                }
+            }
+            renderButtons()
+
+            // return 10 gifs when button is clicked
+            $(document).on("click", ".topic-button", function () {
+                var topic = $(this).attr("data-name");
+                var giphyAPI = "2578b97eba2946f98577c14924e25f79"
+                var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + topic + "&api_key=" + giphyAPI + "&limit=10";
+                $.ajax({
+                    url: queryURL,
+                    method: "GET"
+                }).done(function (response) {
+                    for (i = 0; i < response.data.length; i++) {
+                        console.log(response)
+                        var gifResultDiv = $("<div>");
+                        var ratingDiv = $("<div>");
+                        var rating = response.data[i].rating;
+                        console.log(rating);
+                        $(ratingDiv).html("Rating: " + rating);
+                        $(gifResultDiv).append(ratingDiv);
+                        $("#results-view").append(gifResultDiv);
+                    }
+                })
+            })
+        </script>
+
+    </div>
+
+</body>
+
+</html>
