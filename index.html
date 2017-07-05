@@ -100,12 +100,8 @@
             $("#add-holiday").on("click", function (event) {
                 event.preventDefault();
                 var holiday = $("#holiday-input").val().trim();
-
-                // The movie from the textbox is then added to our array
                 $("#buttons-view").empty()
                 topics.push(holiday);
-
-                // Calling renderButtons which handles the processing of our movie array
                 renderButtons();
             });
         </script>
