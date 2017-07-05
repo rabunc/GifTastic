@@ -59,7 +59,7 @@
             $(document).on("click", ".topic-button", function () {
                 var topic = $(this).attr("data-name");
                 var giphyAPI = "2578b97eba2946f98577c14924e25f79"
-                var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + topic + "&api_key=" + giphyAPI + "&limit=10";
+                var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + topic + "&api_key=" + giphyAPI + "&limit=10";
                 $.ajax({
                     url: queryURL,
                     method: "GET"
